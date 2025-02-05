@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  mysql8:
+    container_name: mysql8
+    hostname: mysql8
+    image: mysql:8
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - "3310:3306"
+    networks:
+      - net-db
+ 
+  mysql8admin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mysql8admin_chi
+    hostname: mysql8admin
+    restart: always
+    links:
+      - mysql8:db
+    ports:
+      - 3311:80
+    networks:
+      - net-db
+ 
+networks:
+  net-db:
+    external: true
